@@ -32,7 +32,7 @@ correctly._
 You can directly create and order a translation request:
 
 ```ruby
-response = client.create_and_order_translation_request(
+response = client.translation_requests.create(
     "request" => {
         "a.key" => {
             "text" => "A sentence to translate"
@@ -57,7 +57,7 @@ When present, Tolq will make a callback to the callback url when the translation
 You can also create a quote, these will not be ordered directly and need your confirmation.
 
 ```ruby
-response = client.quote_translation_request(
+response = client.translation_requests.quote(
     "request" => {
         "a.key" => {
             "text" => "A sentence to translate"
@@ -80,7 +80,7 @@ response.id # You can use this to poll for status and order the translations
 After creating the quote, you can order it:
 
 ```ruby
-client.order_translation_request(response.id)
+client.translation_request.order(response.id)
 ```
 
 If you do not have a callback url or are just interested in the status, you can request the status and/or translations as follows:
