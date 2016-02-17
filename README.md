@@ -1,8 +1,6 @@
 # Tolq::Api
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tolq/api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+The Tolq Api gem wraps our api, making it a lot easier to integrate it with your Ruby application.
 
 ## Installation
 
@@ -22,13 +20,83 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First, you need to create a a client.
+
+```ruby
+client = Tolq::Api::Client.new(ENV['TOLQAPIKEY'], ENV['TOLQAPISECRET'])
+```
+
+_Before making any translation requests, make sure you have set up your billing information
+correctly._
+
+You can directly create and order a translation request:
+
+```ruby
+response = client.create_and_order_translation_request(
+    "request" => {
+        "a.key" => {
+            "text" => "A sentence to translate"
+        }
+    },
+    "source_language_code" => "en",
+    "target_language_code" => "nl",
+    "quality" => "standard",
+    "options" => {
+        "name" => "My translation request",
+        "callback_url" => "https://mysite.com/translations_finished"
+    }
+
+)
+
+response.class # Tolq::TranslationRequest
+response.id # You can use this to poll for status
+```
+
+When present, Tolq will make a callback to the callback url when the translations have been fully finished.
+
+You can also create a quote, these will not be ordered directly and need your confirmation.
+
+```ruby
+response = client.quote_translation_request(
+    "request" => {
+        "a.key" => {
+            "text" => "A sentence to translate"
+        }
+    },
+    "source_language_code" => "en",
+    "target_language_code" => "nl",
+    "quality" => "standard",
+    "options" => {
+        "name" => "My translation request",
+        "callback_url" => "https://mysite.com/translations_finished"
+    }
+
+)
+
+response.class # Tolq::TranslationRequest
+response.id # You can use this to poll for status and order the translations
+```
+
+After creating the quote, you can order it:
+
+```ruby
+client.order_translation_request(response.id)
+```
+
+If you do not have a callback url or are just interested in the status, you can request the status and/or translations as follows:
+
+```ruby
+response = client.show_translation_request(response.id)
+response.class # TranslationRequest
+response.status # 'finished'
+response.translations # { "a.key" => "Een zin om te vertalen" }
+```
+
+For more details on on the library please refer to the [gem documentation](TODO). For more details on possible values see the [api documentation](https://docs.tolq.com).
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+TODO
 
 ## Contributing
 
