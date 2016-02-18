@@ -1,6 +1,6 @@
-require "tolq/api/version"
+require 'tolq/api/version'
 
-Dir[File.dirname(__FILE__) + '/api/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/api/*.rb'].each { |file| require file }
 
 module Tolq
   module Api
