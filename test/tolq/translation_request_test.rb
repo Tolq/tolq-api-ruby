@@ -20,6 +20,17 @@ module Tolq
           assert_equal request.send(key), create_response[key]
         end
       end
+
+      def test_works_with_errors
+        error_response = {
+          errors: ['Error one', 'Error two']
+        }
+
+        request = TranslationRequest.new(error_response)
+
+        assert_equal request.status, 'error'
+        assert_equal request.errors, ['Error one', 'Error two']
+      end
     end
   end
 end

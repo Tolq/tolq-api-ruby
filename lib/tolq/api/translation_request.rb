@@ -23,6 +23,10 @@ module Tolq
         hash.each do |key, val|
           instance_variable_set("@#{key}", val)
         end
+
+        if (hash[:errors] || []).any?
+          @status = 'error'
+        end
       end
     end
   end
