@@ -1,3 +1,5 @@
+require 'json'
+
 require 'tolq/api/version'
 
 Dir[File.dirname(__FILE__) + '/api/*.rb'].each { |file| require file }
