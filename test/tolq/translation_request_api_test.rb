@@ -33,7 +33,7 @@ module Tolq
         @api = TranslationRequestApi.new(@test_client)
       end
 
-      def test_creates_a_request
+      test 'creates a request' do
         result = @api.create(@valid_attrs)
 
         assert result.is_a?(TranslationRequest)
@@ -45,7 +45,7 @@ module Tolq
                      data: @valid_attrs
       end
 
-      def test_create_deals_with_errors
+      test 'create deals with errors' do
         result = @api.create(@invalid_attrs)
 
         assert result.is_a?(TranslationRequest)
@@ -58,7 +58,7 @@ module Tolq
                      data: @invalid_attrs
       end
 
-      def test_quotes_a_request
+      test 'quotes a request' do
         result = @api.quote(@valid_attrs)
 
         assert result.is_a?(TranslationRequest)
@@ -70,7 +70,7 @@ module Tolq
                      data: @valid_attrs
       end
 
-      def test_quote_deals_with_errors
+      test 'quote deals with errors' do
         result = @api.quote(@invalid_attrs)
 
         assert result.is_a?(TranslationRequest)
@@ -83,7 +83,7 @@ module Tolq
                      data: @invalid_attrs
       end
 
-      def test_list_all_requests
+      test 'list all requests' do
         results = @api.list
 
         assert results.is_a?(Array)
@@ -98,7 +98,7 @@ module Tolq
                      data: nil
       end
 
-      def test_order_a_quote
+      test 'order a quote' do
         result = @api.order(1)
         assert result.is_a?(TranslationRequest)
         assert_equal result.status, 'in_translation'
@@ -109,7 +109,7 @@ module Tolq
                      data: nil
       end
 
-      def test_delete_a_quote
+      test 'delete a quote' do
         result = @api.delete(1)
 
         assert_equal result, true
@@ -119,7 +119,17 @@ module Tolq
                      data: nil
       end
 
-      ## Dealing with errors
+      test 'show a request' do
+        result = @api.show(1)
+
+        assert result.is_a?(TranslationRequest)
+        assert_equal result.status, 'in_translation'
+        assert_equal result.id, 1
+        assert_equal @test_client.received,
+                     path: '/translations/requests/1',
+                     method: :get,
+                     data: nil
+      end
     end
   end
 end

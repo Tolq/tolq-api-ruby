@@ -3,6 +3,7 @@ require 'tolq/api'
 
 require 'minitest/autorun'
 require 'pry'
+require 'webmock/minitest'
 Dir[File.dirname(__FILE__) + '/support/*.rb'].each { |file| require file }
 
 def load_fixture(fixname)

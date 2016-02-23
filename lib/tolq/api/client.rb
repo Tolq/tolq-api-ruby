@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Tolq
   module Api
     # Client handles and encapsulates API requests
@@ -37,20 +39,51 @@ module Tolq
       private
 
       def base_url
+        # TODO remove interpolation
+        # not needed with Net::HTTP
         BASE_URL % { key: key, secret: secret }
       end
 
       def do_request(method, path, data = nil)
+        uri = URI.parse(base_url + path)
+        https = Net::HTTP.new(uri.host, uri.port)
+        https.use_ssl = true
+
+        request =
+          case method
+          when :post
+            Net::HTTP::Post.new(uri.path)
+          when :get
+            Net::HTTP::Get.new(uri.path)
+          when :delete
+            Net::HTTP::Delete.new(uri.path)
+          end
+
+        request.body = data.to_json if data
+        # TODO Probably also need to use tls and verify peer for ssl
+        request.basic_auth @key, @secret
+        request['Content-Type'] = 'application/json'
+
+        https.request(request)
       end
 
       def handle_response(response)
+        body = normalize_response_body(response.body)
         case response.code.to_i
         when 200..201
-          JSON.parse(response.body)
+          JSON.parse(body)
         when 422
-          JSON.parse(response.body)
+          JSON.parse(body)
         else
           { errors: ["Unexpected response: #{response.code}"] }
+        end
+      end
+
+      def normalize_response_body(response_body)
+        if response_body
+          response_body
+        else
+          "{}"
         end
       end
     end

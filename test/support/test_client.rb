@@ -31,6 +31,8 @@ class TestClient
     case [method, path]
     when [:get, '/translations/requests']
       [{ id: 1, status: 'in_translation' }]
+    when [:get, "/translations/requests/1"]
+      { id: 1, status: 'in_translation'}
     when [:post, '/translations/requests/1/order']
       { id: 1, status: 'in_translation' }
     when [:delete, '/translations/requests/1']

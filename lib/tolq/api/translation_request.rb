@@ -15,6 +15,7 @@ module Tolq
 
       def initialize(hash)
         set_attrs(hash)
+        @errors ||= []
       end
 
       private

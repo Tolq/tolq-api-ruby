@@ -1,7 +1,6 @@
 module Tolq
   module Api
-    # Handles all requests dealing with translation
-    # requests
+    # Handles all requests dealing with translation requests
     class TranslationRequestApi
       def initialize(client)
         @client = client
@@ -9,6 +8,11 @@ module Tolq
 
       def create(hash)
         response = @client.post('/translations/requests', hash)
+        TranslationRequest.new(response)
+      end
+
+      def show(id)
+        response = @client.get("/translations/requests/#{id}")
         TranslationRequest.new(response)
       end
 
@@ -29,11 +33,8 @@ module Tolq
 
       def delete(id)
         response = @client.delete("/translations/requests/#{id}")
-        if response[:errors].any?
-          false # TODO meaningful errors
-        else
-          true
-        end
+        # TODO: meaningful errors
+        !(response[:errors] && response[:errors].any?)
       end
     end
   end
