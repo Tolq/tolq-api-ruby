@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+For an overview of how our api works, see [the documentation](http://docs.tolq.com/docs/api-getting-started).
+
 First, you need to create a a client.
 
 ```ruby
@@ -28,6 +30,7 @@ client = Tolq::Api::Client.new(ENV['TOLQAPIKEY'], ENV['TOLQAPISECRET'])
 
 _Before making any translation requests, make sure you have set up your billing information
 correctly._
+
 
 You can directly create and order a translation request:
 

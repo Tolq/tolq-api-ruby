@@ -7,11 +7,18 @@ module Tolq
       BASE_URL = 'https://%{key}:%{secret}@api.tolq.com/v1'.freeze
       attr_reader :key, :secret
 
+      # Creates a client to interface with the Tolq API.
+      #
+      # @param key [String] Your API key
+      # @param secret [String] Your API secret
       def initialize(key, secret)
         @key = key
         @secret = secret
       end
 
+      # Via this method you can make requests to the Tolq API
+      #
+      # @return [TranslationRequestApi] An interface for making api requests.
       def translation_requests
         TranslationRequestApi.new(self)
       end

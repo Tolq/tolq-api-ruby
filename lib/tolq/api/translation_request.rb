@@ -1,5 +1,7 @@
 module Tolq
   module Api
+    # Wraps the translation request
+    # responses of the Tolq Api.
     class TranslationRequest
       attr_reader :id,
                   :callback_url,
