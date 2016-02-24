@@ -3,7 +3,7 @@ require 'test_helper'
 module Tolq
   module Api
     class TranslationRequestTest < MiniTest::Test
-      def test_new_from_create_response
+      test 'new from create response' do
         create_response = {
           'source_language_code' => 'en',
           'target_language_code' => 'nl',
@@ -21,7 +21,7 @@ module Tolq
         end
       end
 
-      def test_works_with_errors
+      test 'works with errors' do
         error_response = {
           errors: ['Error one', 'Error two']
         }
