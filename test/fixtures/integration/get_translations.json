@@ -1,0 +1,38 @@
+{
+    "id": 1,
+    "context_url": "http://peanuts.com",
+    "description": "Bananas",
+    "created_at": "2014-06-26 15:22:34 UTC",
+    "completed_at": "2014-06-26 15:22:35 UTC",
+    "orders": [
+        {
+            "quality": "machine",
+            "target_language_code": "tq",
+            "status": "finished"
+        }
+    ],
+    "original": {
+        "a.key": "some text to translate",
+        "b.key": "why are bananas crooked"
+    },
+    "translations": {
+        "tq": {
+            "a.key": "omesay exttay otay anslatetray",
+            "b.key": "ywhay areay ananasbay ookedcray"
+        }
+    },
+    "total_orders": 1,
+    "total_cost": 0.0,
+    "total_keys": 2,
+    "status": "finished",
+    "quality": "machine",
+    "_links": {
+        "review": [
+            {
+                "target_language_code": "tq",
+                "target_language_name": "Tolq Latin",
+                "href": "https://clients.tolq.com/api/1/review?target_language_code=tq"
+            }
+        ]
+    }
+}

@@ -2,16 +2,22 @@ module Tolq
   module Api
     class TranslationRequest
       attr_reader :id,
-                  :source_language_code,
-                  :target_language_code,
-                  :status,
+                  :callback_url,
+                  :completed_at,
+                  :created_at,
                   :errors,
                   :name,
-                  :slug,
+                  :orders,
+                  :original,
                   :quality,
-                  :created_at,
-                  :callback_url,
-                  :completed_at
+                  :slug,
+                  :source_language_code,
+                  :status,
+                  :target_language_code,
+                  :total_orders,
+                  :total_cost,
+                  :total_keys,
+                  :translations
 
       def initialize(hash)
         set_attrs(hash)

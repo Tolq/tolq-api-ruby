@@ -123,7 +123,35 @@ module Tolq
         assert_equal response.quality, 'standard'
       end
 
-      # TODO: Add test for showing with original, orders and translations
+      test 'showing a request with translations' do
+        stub_request(:get, "#{@base_uri}/translations/requests/1")
+          .with(body: nil, headers: { 'Content-Type' => 'application/json' })
+          .to_return(status: 201, body: load_fixture('/integration/get_translations.json'))
+
+        response = @client.translation_requests.show(1)
+
+        assert response.is_a?(TranslationRequest)
+        assert_equal response.id, 1
+        assert_equal response.status, 'finished'
+        assert_equal response.errors, []
+        assert_equal response.quality, 'machine'
+        assert_equal response.total_orders, 1
+        assert_equal response.total_cost, 0.0
+        assert_equal response.total_keys, 2
+        assert_equal response.orders, [
+          { "quality" => "machine", "target_language_code" => "tq", "status" => "finished"}
+        ]
+        assert_equal response.translations, {
+          "tq" => {
+            "a.key" => "omesay exttay otay anslatetray",
+            "b.key" => "ywhay areay ananasbay ookedcray"
+          }
+        }
+        assert_equal response.original, {
+          "a.key" => "some text to translate",
+          "b.key" => "why are bananas crooked"
+        }
+      end
     end
   end
 end
