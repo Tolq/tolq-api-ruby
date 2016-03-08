@@ -2,9 +2,9 @@ require 'test_helper'
 
 module Tolq
   module Api
-    class TranslationRequestTest < MiniTest::Test
+    class ResponseTest < MiniTest::Test
       test 'new from create response' do
-        create_response = {
+        body = {
           'source_language_code' => 'en',
           'target_language_code' => 'nl',
           'status' => 'pending',
@@ -15,10 +15,9 @@ module Tolq
           'callback_url' => 'https://mysite.com/translations_finished'
         }
 
-        request = TranslationRequest.new(create_response)
-        create_response.keys.each do |key|
-          assert_equal request.send(key), create_response[key]
-        end
+        request = Response.new(status: 201, body: body.to_json)
+        assert_equal request.status, 201
+        assert_equal request.body, body.to_json
       end
 
       test 'works with errors' do
@@ -26,10 +25,10 @@ module Tolq
           errors: ['Error one', 'Error two']
         }
 
-        request = TranslationRequest.new(error_response)
+        request = Response.new(status: 422, body: error_response.to_json)
 
-        assert_equal request.status, 'error'
-        assert_equal request.errors, ['Error one', 'Error two']
+        assert_equal request.status, 422
+        assert_equal request.body, error_response.to_json
       end
     end
   end
