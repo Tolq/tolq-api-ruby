@@ -51,8 +51,8 @@ response = client.translation_requests.create(
 
 )
 
-response.class # Tolq::TranslationRequest
-response.id # You can use this to poll for status
+response.class # Tolq::Api::Response
+response.body # A tolq response as per the documentation. This JSON and can be parsed using your favourite json parser
 ```
 
 When present, Tolq will make a callback to the callback url when the translations have been fully finished.
@@ -76,8 +76,8 @@ response = client.translation_requests.quote(
 
 )
 
-response.class # Tolq::TranslationRequest
-response.id # You can use this to poll for status and order the translations
+response.class # Tolq::Api::Response
+response.body # A tolq response as per the documentation. This JSON and can be parsed using your favourite json parser
 ```
 
 After creating the quote, you can order it:
@@ -89,10 +89,9 @@ client.translation_request.order(response.id)
 If you do not have a callback url or are just interested in the status, you can request the status and/or translations as follows:
 
 ```ruby
-response = client.show_translation_request(response.id)
-response.class # TranslationRequest
-response.status # 'finished'
-response.translations # { "a.key" => "Een zin om te vertalen" }
+response = client.show_translation_request(<id>)
+response.class # Tolq::Api::Response
+response.body # A tolq response as per the documentation. This JSON and can be parsed using your favourite json parser
 ```
 
 For more details on on the library please refer to the [gem documentation](TODO). For more details on possible values see the [api documentation](https://docs.tolq.com).

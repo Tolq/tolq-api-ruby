@@ -12,7 +12,8 @@ class TestClient
       errors = validate(data)
       return { errors: errors } if errors.any?
 
-      create_fake_data(method, path, data)
+      response = create_fake_data(method, path, data)
+      Tolq::Api::Response.new(status: response[:status], body: response[:body])
     end
   end
 
@@ -28,17 +29,20 @@ class TestClient
   end
 
   def create_fake_data(method, path, data)
-    case [method, path]
-    when [:get, '/translations/requests']
-      [{ id: 1, status: 'in_translation' }]
-    when [:get, "/translations/requests/1"]
-      { id: 1, status: 'in_translation'}
-    when [:post, '/translations/requests/1/order']
-      { id: 1, status: 'in_translation' }
-    when [:delete, '/translations/requests/1']
-      { errors: [] }
-    else
-      data.merge(id: 1, status: 'pending')
-    end
+    result = case [method, path]
+             when [:get, '/translations/requests']
+               { status: 200, body: [{ id: 1, status: 'in_translation' }] }
+             when [:get, "/translations/requests/1"]
+               { status: 200, body: { id: 1, status: 'in_translation'} }
+             when [:post, '/translations/requests/1/order']
+               { status: 201, body: { id: 1, status: 'in_translation' } }
+             when [:delete, '/translations/requests/1']
+               { status: 200, body: { errors: [] } }
+             else
+               { status: 201, body: data.merge(id: 1, status: 'pending') }
+             end
+
+    result[:body] = result[:body].to_json
+    result
   end
 end

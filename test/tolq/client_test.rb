@@ -20,32 +20,31 @@ module Tolq
 
       # DRY tests to verify client works as expected
       { get: 200, post: 201, delete: 200, put: 200 }.each do |verb, code|
-
         test "#{verb} succesful request" do
           response_body = load_fixture("client/#{verb}.json")
           stub_request(code, response_body) do
-            assert_equal @client.send(verb, '/test'), JSON.parse(response_body)
+            assert_equal @client.send(verb, '/test'), Response.new(status: code, body: response_body)
           end
         end
 
         test "#{verb} server side errors" do
           stub_request(301) do
-            assert_equal @client.send(verb, '/test'), { errors: ['Unexpected response: 301'] }
+            assert_equal @client.send(verb, '/test'), Response.new(status: 301, body: nil)
           end
 
           stub_request(400) do
-            assert_equal @client.send(verb, '/test'), { errors: ['Unexpected response: 400'] }
+            assert_equal @client.send(verb, '/test'), Response.new(status: 400, body: nil)
           end
 
           stub_request(500) do
-            assert_equal @client.send(verb, '/test'), { errors: ['Unexpected response: 500'] }
+            assert_equal @client.send(verb, '/test'), Response.new(status: 500, body: nil)
           end
         end
 
         test "#{verb} user input error" do
-          response_body = load_fixture("client/user_error.json")
+          response_body = load_fixture('client/user_error.json')
           stub_request(422, response_body) do
-            assert_equal @client.send(verb, '/test'), JSON.parse(response_body)
+            assert_equal @client.send(verb, '/test'), Response.new(status: 422, body: response_body)
           end
         end
 

@@ -75,23 +75,7 @@ module Tolq
       end
 
       def handle_response(response)
-        body = normalize_response_body(response.body)
-        case response.code.to_i
-        when 200..201
-          JSON.parse(body)
-        when 422
-          JSON.parse(body)
-        else
-          { errors: ["Unexpected response: #{response.code}"] }
-        end
-      end
-
-      def normalize_response_body(response_body)
-        if response_body
-          response_body
-        else
-          "{}"
-        end
+        Response.new(status: response.code.to_i, body: response.body)
       end
     end
   end
