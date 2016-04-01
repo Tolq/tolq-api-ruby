@@ -2,7 +2,7 @@ module Tolq
   module Api
     # Handles all requests dealing with translation requests
     class TranslationRequestApi
-      # Creats a new TranslationRequestApi.
+      # Creats a new Tolq::Api::ResponseApi.
       #
       # Called indirectly via Client#translation_requests
       #
@@ -15,7 +15,7 @@ module Tolq
       # Creates and orders a new translation request
       #
       # @param request [Hash] A hash consisting of a translation request, this maps 1:1 with the JSON request format. See our documentation for details
-      # @return [TranslationRequest] A TranslationRequest with an id, status and some metadata
+      # @return [Tolq::Api::Response] A Tolq::Api::Response with an id, status and some metadata
       def create(request)
         @client.post('/translations/requests', request)
       end
@@ -23,7 +23,7 @@ module Tolq
       # Retrieves a translation request
       #
       # @param id [Integer] An id referencing a translation request
-      # @return [TranslationRequest] A TranslationRequest with an id, status and some metadata, if completed the translations are also included
+      # @return [Tolq::Api::Response] A Tolq::Api::Response with an id, status and some metadata, if completed the translations are also included
       def show(id)
         @client.get("/translations/requests/#{id}")
       end
@@ -31,14 +31,14 @@ module Tolq
       # Creates but doesn't order a new translation request
       #
       # @param request [Hash] A hash consisting of a translation request, this maps 1:1 with the JSON request format. See our documentation for details
-      # @return [TranslationRequest] A TranslationRequest with an id, status and some metadata
+      # @return [Tolq::Api::Response] A Tolq::Api::Response with an id, status and some metadata
       def quote(request)
         @client.post('/translations/requests/quote', request)
       end
 
       # Lists all your translation requests
       #
-      # @return [Array<TranslationRequest>] A list of translation requests without translations
+      # @return [Tolq::Api::Response] A list of translation requests without translations
       def list
         @client.get('/translations/requests')
       end
@@ -46,7 +46,7 @@ module Tolq
       # Orders a translation request
       #
       # @param id [Integer] An id referencing a translation request
-      # @return [TranslationRequest] A TranslationRequest with an id, status and some metadata
+      # @return [Tolq::Api::Response] A Tolq::Api::Response with an id, status and some metadata
       def order(id)
         @client.post("/translations/requests/#{id}/order")
       end

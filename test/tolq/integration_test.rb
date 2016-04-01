@@ -105,6 +105,16 @@ module Tolq
 
       end
 
+      test 'showing a quote with invalid credentials' do
+        stub_request(:get, "#{@base_uri}/translations/requests/1")
+          .with(body: nil, headers: { 'Content-Type' => 'application/json' })
+          .to_return(status: 401)
+
+        response = @client.translation_requests.show(1)
+        assert_equal response.status, 401
+        assert_equal response.body, nil
+      end
+
       test 'showing a request with translations' do
         stub_request(:get, "#{@base_uri}/translations/requests/1")
           .with(body: nil, headers: { 'Content-Type' => 'application/json' })
