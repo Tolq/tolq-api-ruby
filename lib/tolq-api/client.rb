@@ -1,4 +1,4 @@
-require 'net/http'
+require 'net/https'
 
 module Tolq
   module Api
@@ -67,7 +67,6 @@ module Tolq
           end
 
         request.body = data.to_json if data
-        # TODO Probably also need to use tls and verify peer for ssl
         request.basic_auth @key, @secret
         request['Content-Type'] = 'application/json'
 
