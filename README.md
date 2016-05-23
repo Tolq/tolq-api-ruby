@@ -89,7 +89,7 @@ client.translation_request.order(response.id)
 If you do not have a callback url or are just interested in the status, you can request the status and/or translations as follows:
 
 ```ruby
-response = client.show_translation_request(<id>)
+response = client.translation_requests.show(<id>)
 response.class # Tolq::Api::Response
 response.body # A tolq response as per the documentation. This JSON and can be parsed using your favourite json parser
 ```
