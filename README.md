@@ -93,8 +93,10 @@ response = client.translation_requests.show(<id>)
 response.class # Tolq::Api::Response
 response.body # A tolq response as per the documentation. This JSON and can be parsed using your favourite json parser
 ```
+You can verify a callback HMAC signature by calling `client.valid_signature?`, this can be used to verify the authenticity of a callback.
 
-For more details on on the library please refer to the [gem documentation](TODO). For more details on possible values see the [api documentation](https://docs.tolq.com).
+For more details on on the library please refer to the [gem documentation](http://www.rubydoc.info/gems/tolq-api). For more details on possible values see the [api documentation](https://docs.tolq.com).
+
 
 ## Development
 

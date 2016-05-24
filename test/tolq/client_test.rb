@@ -18,6 +18,14 @@ module Tolq
         assert_equal @client.send(:base_url), 'https://abc:xyz@api.tolq.com/v1'
       end
 
+      test 'hmac signature check' do
+        payload = "{ 'hello': 'world' }"
+        refute @client.valid_signature?('badsignature', payload)
+
+        good_signature = 'sha1=' + OpenSSL::HMAC.digest('sha1', @client.key, payload)
+        assert @client.valid_signature?(good_signature, payload)
+      end
+
       # DRY tests to verify client works as expected
       { get: 200, post: 201, delete: 200, put: 200 }.each do |verb, code|
         test "#{verb} succesful request" do
