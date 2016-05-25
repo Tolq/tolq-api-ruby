@@ -1,0 +1,40 @@
+PATH
+  remote: .
+  specs:
+    tolq-api (0.2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.4.0)
+    coderay (1.1.1)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    hashdiff (0.3.0)
+    method_source (0.8.2)
+    minitest (5.9.0)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rake (10.5.0)
+    safe_yaml (1.0.4)
+    slop (3.6.0)
+    webmock (1.24.6)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.11)
+  minitest (~> 5.0)
+  pry
+  rake (~> 10.0)
+  tolq-api!
+  webmock (~> 1.24.6)
+
+BUNDLED WITH
+   1.11.2
