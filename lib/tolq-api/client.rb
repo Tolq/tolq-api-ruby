@@ -23,6 +23,17 @@ module Tolq
         TranslationRequestApi.new(self)
       end
 
+      # Verifies a signature on a callback payload
+      # You can find the signature in the X-Tolq-Signature
+      # header
+      #
+      # @param signature [String] A sha1 encoded HMAC signature including the 'sha1=' prefix
+      # @param payload [String] The body of the payload as a string
+      def valid_signature?(signature, payload)
+        payload_signature = 'sha1=' + OpenSSL::HMAC.digest('sha1', self.key, payload)
+        payload_signature == signature
+      end
+
       def get(path, data = nil)
         response = do_request(:get, path, data)
         handle_response(response)
