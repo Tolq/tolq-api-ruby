@@ -22,7 +22,7 @@ module Tolq
         payload = "{ 'hello': 'world' }"
         refute @client.valid_signature?('badsignature', payload)
 
-        good_signature = 'sha1=' + OpenSSL::HMAC.digest('sha1', @client.key, payload)
+        good_signature = 'sha1=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), @client.key, payload)
         assert @client.valid_signature?(good_signature, payload)
       end
 

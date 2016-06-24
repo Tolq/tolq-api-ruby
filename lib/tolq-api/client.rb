@@ -30,7 +30,7 @@ module Tolq
       # @param signature [String] A sha1 encoded HMAC signature including the 'sha1=' prefix
       # @param payload [String] The body of the payload as a string
       def valid_signature?(signature, payload)
-        payload_signature = 'sha1=' + OpenSSL::HMAC.digest('sha1', self.key, payload)
+        payload_signature = 'sha1=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), self.key, payload)
         payload_signature == signature
       end
 

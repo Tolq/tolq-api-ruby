@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tolq-api (0.2.0)
+    tolq-api (0.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -37,4 +37,4 @@ DEPENDENCIES
   webmock (~> 1.24.6)
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
